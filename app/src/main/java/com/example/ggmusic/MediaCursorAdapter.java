@@ -10,24 +10,20 @@ import android.widget.TextView;
 
 import androidx.cursoradapter.widget.CursorAdapter;
 
-public class MediaCursorAdapter extends CursorAdapter {
-    //CursorAdapter这个类是继承于BaseAdapter的它是一个虚类它为 Cursor和ListView连接提供了桥梁
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
+public class MediaCursorAdapter extends CursorAdapter {//继承CursorAdapter  用Cursor和ListView连接显示数据
+    private Context mContext;//保存上下文对象
+    private LayoutInflater mLayoutInflater;//布局解析器
 
-    public MediaCursorAdapter(Context context){// MediaCursorAdapter类继承自CursorAdapter，它是一个用于将Cursor和ListView连接的桥梁。
+    public MediaCursorAdapter(Context context){
         super(context,null,0);
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        //只在实例化的时候调用,数据增加的时候也会调用,但是在重绘(比如修改条目里的TextView的内容)的时候不会被调用
-        //主要做项视图布局的加载操作
-        View itemView = mLayoutInflater.inflate(R.layout.list_item,viewGroup,false);
-        // 将list_item.xml布局文件转换为View对象。
-        // 在这个例子中，itemView是一个View对象，它包含了列表视图中每个项的布局
+    public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {//Cursor:ListView当前项的游标对象,读取相音乐属性字段;
+        View itemView = mLayoutInflater.inflate(R.layout.list_item,viewGroup,false);//viewGroup视图容器
+
         if(itemView != null){
             ViewHolder vh = new ViewHolder();
             vh.tvTitle = itemView.findViewById(R.id.tv_title);
@@ -41,9 +37,7 @@ public class MediaCursorAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        // 在绘制每个Item之前调用，也会在重绘时调用。
-        // 用于绑定数据到视图
+    public void bindView(View view, Context context, Cursor cursor) {// 用于绑定数据到视图
         ViewHolder vh = (ViewHolder) view.getTag();
 
         int titleIndex = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
@@ -61,7 +55,7 @@ public class MediaCursorAdapter extends CursorAdapter {
         }
     }
 
-    public class ViewHolder {
+    public class ViewHolder {//暂存加载项视图布局后的各控件对象,避免通过findViewById()的方法重复进行查找绑定控件对象
         TextView tvTitle;
         TextView tvArtist;
         TextView tvOrder;

@@ -20,6 +20,7 @@ public class MediaCursorAdapter extends CursorAdapter {//继承CursorAdapter  �
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
+    //视图布局加载
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {//Cursor:ListView当前项的游标对象,读取相音乐属性字段;
         View itemView = mLayoutInflater.inflate(R.layout.list_item,viewGroup,false);//viewGroup视图容器

@@ -82,6 +82,7 @@ public class MusicService extends Service {
         return false;
     }
 
+    //启动服务的信息及传递给服务的数据
     @Override
     public int onStartCommand(Intent intent,
                               int flags, int startId) {
@@ -135,21 +136,19 @@ public class MusicService extends Service {
                 new NotificationCompat.Builder(
                         getApplicationContext(),
                         CHANNEL_ID);
-        //设置通知的属性
-        Notification notification = builder
+
+        Notification notification = builder//设置通知的属性
                 .setContentTitle(title)
                 .setContentText(artist)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentIntent(pendingIntent).build();
 
-        //调用startForeground()方法，将Service设置为前台运行状态，并传入ONGOING_NOTIFICATION_ID和notification参数。
-        //这样，在Service运行时，通知将一直显示在状态栏中，提醒用户Service正在运行。
-        startForeground(ONGOING_NOTIFICATION_ID, notification);
+        startForeground(ONGOING_NOTIFICATION_ID, notification);//将Service设置为前台运行状态，在Service运行时，通知将一直显示在状态栏中，提醒用户Service正在运行。
 
         return super.onStartCommand(intent, flags, startId);
     }
-    //提供绑定服务对象实例的方法,通过这个内部类，其他组件可以直接访问绑定服务对象的信息。
-    public class MusicServiceBinder extends Binder {
+
+    public class MusicServiceBinder extends Binder {//提供绑定服务对象实例的方法,通过这个内部类，其他组件可以直接访问绑定服务对象的信息。
         MusicService getService() {
             return MusicService.this;
         }
